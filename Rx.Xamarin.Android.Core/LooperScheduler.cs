@@ -30,10 +30,6 @@ namespace Rx.Xamarin.Android.Core
             bool isCancelled = false;
             var innerDisp = new SerialDisposable () { Disposable = Disposable.Empty };
 
-            //if (looperId > 0 && looperId == Java.Lang.Thread.CurrentThread ().Id) {
-            //    return action (this, state);
-            //}
-
             handler.Post (() => {
                 if (isCancelled) return;
                 innerDisp.Disposable = action (this, state);

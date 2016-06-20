@@ -1,6 +1,7 @@
 ﻿using Android.App;
 using Android.Widget;
 using Android.OS;
+using Android.Content;
 
 using System;
 using System.Threading;
@@ -35,6 +36,15 @@ namespace Rx.Xamarin.Android.Sample
             button.Click += delegate {
                 StartBackgroundWork ();
             };
+
+            Button sendBroadcastButton = FindViewById<Button> (Resource.Id.buttonSendBroadcast);
+            sendBroadcastButton.Click += delegate {
+                SendBroadcast (new Intent ("com.ksachdeva.oss.TEST_RX_INTENT"));
+            };
+
+            RxBroadcastReceiver.Create (this, new IntentFilter ("com.ksachdeva.oss.TEST_RX_INTENT")).Subscribe ((Intent obj) => {
+                Console.WriteLine (obj.Action);
+            });
         }
 
         static IObservable<string> SampleObservable ()
